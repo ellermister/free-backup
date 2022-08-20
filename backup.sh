@@ -4,7 +4,7 @@
 
 chunkBytesSize=$(expr 1024 \* 5) # KB
 outPath=outs
-realImage=bbb.png
+realImage=bbb.jpg
 action=$1
 filePath=$2
 
@@ -126,15 +126,16 @@ if [ ! -f $filePath ];then
     exit 1
 fi
 
+if [ ! -f $realImage ];then
+    echo "$realImage: not exist!"
+    exit 1
+fi
+
 if [ ! -d $outPath ];then
     mkdir $outPath
 fi
 
 if [ $action == "upload" ];then
-    if [ ! -f $realImage ];then
-        echo "$realImage: not exist!"
-        exit 1
-    fi
     split_to_chunk_file $filePath
 elif [ $action == "download" ];then
     recover_backup_file $filePath
